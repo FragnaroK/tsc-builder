@@ -1,0 +1,29 @@
+{
+  "name": "tsc-builder",
+  "version": "1.0.0",
+  "description": "",
+  "main": "./build/src/index.js",
+  "bin": {
+    "tsc-builder": "./build/src/index.js"
+  },
+  "scripts": {
+    "build:prod": "npm run build && npm uninstall tsc-builder -g && npm install -g",
+    "start": "node ./build/index.js",
+    "build": "rimraf ./build && tsc",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "FragnaroK",
+  "license": "ISC",
+  "dependencies": {
+    "chalk": "^4.1.2",
+    "cli-spinners": "^2.9.0",
+    "dotenv": "^16.3.1",
+    "ora": "^3.2.0"
+  },
+  "devDependencies": {
+    "@types/node": "^20.8.2",
+    "@types/ora": "^3.2.0",
+    "rimraf": "^5.0.5",
+    "typescript": "^5.2.2"
+  }
+}
