@@ -77,6 +77,7 @@ async function buildTypescript() {
 async function copyFiles(files: string[], source: string, destination: string) {
     const log = new Logger('COPY', debug_mode);
     log.blank();
+   if (files.length > 0) {
     log.d("Copying files: ", files);
     try {
         const src = path.join(currPath, source);
@@ -96,6 +97,9 @@ async function copyFiles(files: string[], source: string, destination: string) {
         spinner.fail('Files copy failed');
         log.e(error.message);
     }
+   } else {
+    log.i("No files to copy")
+   }
 }
 
 async function build(settings: Settings) {
@@ -104,7 +108,7 @@ async function build(settings: Settings) {
     try {
         const src = settings.src ?? 'src';
         const dist = settings.dist ?? 'dist';
-        const files = settings.files ?? ['package.json', 'package-lock.json', 'README.md', 'LICENSE'];
+        const files = settings.files ?? [];
 
         await buildTypescript()
         .then(async () => {
