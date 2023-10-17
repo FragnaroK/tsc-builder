@@ -21,7 +21,7 @@
     "ora": "^3.2.0"
   },
   "devDependencies": {
-    "@types/node": "^20.8.2",
+    "@types/node": "^20.8.6",
     "@types/ora": "^3.2.0",
     "rimraf": "^5.0.5",
     "typescript": "^5.2.2"
