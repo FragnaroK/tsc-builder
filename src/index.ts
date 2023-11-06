@@ -7,7 +7,7 @@ import packageJson from '../package.json';
 import ora from 'ora';
 import { exec } from 'child_process';
 import fs from 'fs/promises';
-import Logger from './logger';
+import Logger from 'node-logger-cli';
 import { BuildType, Settings } from './types';
 import path from 'path';
 
@@ -52,12 +52,11 @@ async function buildTypescript() {
     const log = new Logger('TYPESCRIPT', debug_mode);
     log.blank();
     log.i("Building typescript...");
-    log.d("Building typescript...")
     try {
         spinner.start('Building typescript...');
         await new Promise((resolve, reject) => {
             exec('tsc',
-                (error, stdout, stderr) => {
+                (error, stdout) => {
                     if (error) {
                         log.e(error.message);
                         reject(error.message);
