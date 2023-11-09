@@ -1,10 +1,23 @@
 {
   "name": "@fragnarok/tsc-builder",
-  "version": "1.0.2",
+  "version": "1.0.5",
   "description": "",
   "main": "./build/src/index.js",
   "bin": {
     "tsc-builder": "./build/src/index.js"
+  },
+  "author": {
+    "name": "FragnaroK",
+    "email": "fcanalejo2000@outlook.com",
+    "url": "https://francocanalejo.com"
+  },
+  "homepage": "https://github.com/FragnaroK/tsc-builder",
+  "bugs": {
+    "url": "https://github.com/FragnaroK/tsc-builder/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/FragnaroK/tsc-builder.git"
   },
   "scripts": {
     "build:prod": "npm run build && npm uninstall @fragnarok/tsc-builder -g && npm install -g",
@@ -13,7 +26,6 @@
     "deploy": "npm run build:prod && npm publish --access=public",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": "FragnaroK",
   "license": "ISC",
   "dependencies": {
     "chalk": "^4.1.2",

@@ -6,4 +6,5 @@ export interface Settings {
     dist?: string;
     files?: string[];
     settingsFilename?: string;
+    npx?: boolean;
 }

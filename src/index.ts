@@ -1,5 +1,4 @@
 #! /usr/bin/env node
-// Setup environment variables
 import dotenv from 'dotenv';
 dotenv.config();
 
@@ -47,31 +46,6 @@ async function getSettingsFile(buildType: BuildType = 'dev'): Promise<Settings |
         return null;
     }
 }
- 
-async function buildTypescript() {
-    const log = new Logger('TYPESCRIPT', debug_mode);
-    log.blank();
-    log.i("Building typescript...");
-    try {
-        spinner.start('Building typescript...');
-        await new Promise((resolve, reject) => {
-            exec('tsc',
-                (error, stdout) => {
-                    if (error) {
-                        log.e(error.message);
-                        reject(error.message);
-                    } else {
-                        spinner.succeed('Typescript built successfully');
-                        log.d(stdout);
-                        resolve(stdout);
-                    }
-                });
-        });
-    } catch (error: any) {
-        spinner.fail('Typescript build failed');
-        log.e(error.message);
-    }
-}
 
 async function copyFiles(files: string[], source: string, destination: string) {
     const log = new Logger('COPY', debug_mode);
@@ -101,6 +75,46 @@ async function copyFiles(files: string[], source: string, destination: string) {
    }
 }
 
+async function deletePreviousBuild(destination: string) {
+    const log = new Logger('DELETE', debug_mode);
+    log.blank();
+    log.i("Deleting previous build...");
+    try {
+        spinner.start('Deleting previous build...');
+        const dist = path.join(currPath, destination);
+        await fs.rm(dist, { recursive: true, force: true });
+        spinner.succeed('Previous build deleted');
+    } catch (error: any) {
+        spinner.fail('Previous build delete failed');
+        log.e(error.message);
+    }
+}
+ 
+async function buildTypescript(npx: boolean = false) {
+    const log = new Logger('TYPESCRIPT', debug_mode);
+    log.blank();
+    log.i("Building typescript...");
+    try {
+        spinner.start('Building typescript...');
+        await new Promise((resolve, reject) => {
+            exec(`${npx ? 'npx' : ''} tsc`,
+                (error, stdout) => {
+                    if (error) {
+                        log.e(error.message);
+                        reject(error.message);
+                    } else {
+                        spinner.succeed('Typescript built successfully');
+                        log.d(stdout);
+                        resolve(stdout);
+                    }
+                });
+        });
+    } catch (error: any) {
+        spinner.fail('Typescript build failed');
+        log.e(error.message);
+    }
+} 
+
 async function build(settings: Settings) {
     const log = new Logger('BUILD', debug_mode);
     log.d("Building...");
@@ -109,7 +123,8 @@ async function build(settings: Settings) {
         const dist = settings.dist ?? 'dist';
         const files = settings.files ?? [];
 
-        await buildTypescript()
+        await deletePreviousBuild(dist);
+        await buildTypescript(settings.npx ?? false)
         .then(async () => {
             await copyFiles(files, src, dist);
         });
@@ -144,7 +159,7 @@ async function main(args: string[] = process.argv) {
         if (settings) {
             await build(settings);
         } else {
-            log.e('No settings file found', `(${settingsFilename}.dev.json)`);
+            log.e('No settings file found', `(${settingsFilename}.${buildType}.json)`);
         }
 
     } catch (error: any) {
