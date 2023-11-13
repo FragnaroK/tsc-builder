@@ -28,7 +28,7 @@
   },
   "license": "ISC",
   "dependencies": {
-    "chalk": "^4.1.2",
+    "chalk": "^5.3.0",
     "cli-spinners": "^2.9.0",
     "dotenv": "^16.3.1",
     "node-logger-cli": "^1.0.3",
