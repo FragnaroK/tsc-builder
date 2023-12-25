@@ -32,7 +32,7 @@
     "cli-spinners": "^2.9.0",
     "dotenv": "^16.3.1",
     "node-logger-cli": "^1.0.3",
-    "ora": "^3.2.0"
+    "ora": "^8.0.1"
   },
   "devDependencies": {
     "@types/node": "^20.8.6",
