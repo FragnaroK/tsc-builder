@@ -126,7 +126,7 @@ async function build(settings: Settings) {
         await deletePreviousBuild(dist);
         await buildTypescript(settings.npx ?? false)
         .then(async () => {
-            await copyFiles(files, src, dist);
+            if (files) await copyFiles(files, src, dist);
         });
         
     } catch (error: any) {

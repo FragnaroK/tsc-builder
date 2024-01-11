@@ -7,4 +7,5 @@ export interface Settings {
     files?: string[];
     settingsFilename?: string;
     npx?: boolean;
+    standalone?: boolean;
 }
