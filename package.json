@@ -20,7 +20,7 @@
     "url": "git+https://github.com/FragnaroK/tsc-builder.git"
   },
   "scripts": {
-    "build:prod": "npm run build && npm uninstall @fragnarok/tsc-builder -g && npm install -g",
+    "install:global": "npm run build && npm uninstall @fragnarok/tsc-builder -g && npm install -g",
     "start": "node ./build/index.js",
     "build": "rimraf ./build && tsc",
     "deploy": "npm run build:prod && npm publish --access=public",
